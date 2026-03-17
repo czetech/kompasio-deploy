@@ -6,7 +6,7 @@ combined into a single release on the server:
 
 ```
 ┌─────────────────┐    ┌──────────────┐
-│  czetech/       │    │  cassiopea/  │
+│  czetech/       │    │              │
 │  kompasio-site  │    │  kompasio    │
 │  (Astro)        │    │  (PHP)       │
 └────────┬────────┘    └────────┬─────┘
@@ -31,5 +31,9 @@ combined into a single release on the server:
 ## Usage
 
 ```
-dep deploy
+dep deploy \
+    -o deploy_path=<DEPLOY_PATH> \
+    -o hostname=<DEPLOY_HOST> \
+    -o port=<DEPLOY_PORT> \
+    -o remote_user=<DEPLOY_USER>
 ```
