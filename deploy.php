@@ -3,7 +3,7 @@ namespace Deployer;
 
 require 'recipe/common.php';
 
-set('repository', 'https://gitlab.com:jchorvat/kompasio.git');
+set('repository', 'git@gitlab.com:jchorvat/kompasio.git');
 set('branch', 'production');
 
 set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
