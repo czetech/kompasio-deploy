@@ -8,10 +8,7 @@ set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
 
 add('shared_dirs', ['log', 'temp']);
 
-host('shell.r6.websupport.sk')
-    ->setPort(25816)
-    ->set('remote_user', 'uid6052466')
-    ->set('deploy_path', '~/cze.tech/sub/kompasio-htaccess-test');
+host('kompasio');
 
 desc('Build Astro site');
 task('deploy:astro', function () {
