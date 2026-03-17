@@ -3,7 +3,9 @@ namespace Deployer;
 
 require 'recipe/common.php';
 
-set('repository', 'https://github.com/czepiec/nette-example.git');
+set('repository', 'https://gitlab.com:jchorvat/kompasio.git');
+set('branch', 'production');
+
 set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
 
 add('shared_dirs', ['log', 'temp']);
