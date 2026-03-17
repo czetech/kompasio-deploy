@@ -1,0 +1,14 @@
+{
+    "name": "czetech/kompasio-deploy",
+    "description": "Kompasio deployment configuration",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Petr Czepiec",
+            "email": "petr@czepiec.me"
+        }
+    ],
+    "require": {
+        "deployer/deployer": "^7.5"
+    }
+}

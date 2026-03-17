@@ -1,0 +1,26 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: production_environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: composer install --no-dev --no-interaction
+
+      - name: Deploy
+        uses: deployphp/action@v1
+        with:
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          known-hosts: |
+            [shell.r6.websupport.sk]:25816 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICmwVAwNrql/B6RLMhyU19zVFZbzbV/0n4WmXZfdGfAj
+          dep: deploy
