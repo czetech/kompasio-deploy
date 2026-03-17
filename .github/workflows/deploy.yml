@@ -22,7 +22,7 @@ jobs:
         uses: deployphp/action@v1.0.23
         with:
           dep: deploy
-          options:
+          options: >-
             deploy_path: ${{ vars.DEPLOY_PATH }}
             hostname: ${{ vars.DEPLOY_HOST }}
             port: ${{ vars.DEPLOY_PORT }}
