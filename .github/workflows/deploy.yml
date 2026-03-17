@@ -21,11 +21,11 @@ jobs:
       - name: Deploy
         uses: deployphp/action@v1.0.23
         with:
-          dep: deploy
-          options: >-
-            deploy_path: ${{ vars.DEPLOY_PATH }}
-            hostname: ${{ vars.DEPLOY_HOST }}
-            port: ${{ vars.DEPLOY_PORT }}
-            remote_user: ${{ vars.DEPLOY_USER }}
+          dep: >-
+            deploy
+            -o deploy_path=${{ vars.DEPLOY_PATH }}
+            -o hostname=${{ vars.DEPLOY_HOST }}
+            -o port=${{ vars.DEPLOY_PORT }}
+            -o remote_user=${{ vars.DEPLOY_USER }}
           private-key: ${{ secrets.PRIVATE_KEY }}
           known-hosts: ${{ secrets.KNOWN_HOSTS }}
