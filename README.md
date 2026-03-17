@@ -5,19 +5,19 @@ Handles shipping of the Kompasio web to shared hosting via
 combined into a single release on the server:
 
 ```
-┌─────────────────┐    ┌──────────────┐
-│  czetech/       │    │              │
-│  kompasio-site  │    │  kompasio    │
-│  (Astro)        │    │  (PHP)       │
-└────────┬────────┘    └────────┬─────┘
-         │                      │
-         │ npm                  │ composer
-         │                      │
-         └───────────┐   ┌──────┘
-                     ▼   ▼
-                ┌──────────────┐
-                │  Websupport  │
-                └──────────────┘
+┌─────────────────┐    ┌────────────┐
+│  czetech/       │    │            │
+│  kompasio-site  │    │  kompasio  │
+│  (Astro)        │    │  (PHP)     │
+└────────┬────────┘    └──────┬─────┘
+         │                    │
+         │ npm                │ composer
+         │                    │
+         └────────┐    ┌──────┘
+                  ▼    ▼
+             ┌──────────────┐
+             │  Webhosting  │
+             └──────────────┘
 ```
 
 ## Deploy pipeline
