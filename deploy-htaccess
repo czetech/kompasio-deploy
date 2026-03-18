@@ -1,33 +1,48 @@
 Require all granted
 DirectorySlash Off
+DirectoryIndex index.html
 ErrorDocument 404 /404.html
-RewriteEngine On
 
-# Force HTTPS
-RewriteCond %{HTTPS} =off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# disable directory listing
+<IfModule mod_autoindex.c>
+	Options -Indexes
+</IfModule>
 
-# Remove trailing slash from URLs (except root "/")
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteCond %{REQUEST_URI} (.+)/$
-RewriteRule ^ %1 [L,R=301]
+# enable cool URL
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
 
-# Remove /index.html from URLs
-RewriteCond %{THE_REQUEST} /index\.html[\s?] [NC]
-RewriteRule ^(.*?)/?index\.html$ /$1 [L]
+	RedirectMatch 301 ^/app/sk/map/?$ /app/sk/map/zoznam/
 
-# Serve indexes without trailing slash
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteRule ^(.*)$ $1/index.html [L]
+	# use HTTPS
+	RewriteCond %{HTTPS} !on
+	RewriteCond %{HTTP_HOST} !=localhost
+	RewriteRule .? https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-# Nette PHP - route /app/ paths through front controller
-RewriteCond %{REQUEST_URI} ^/app/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
+	# prevents files starting with dot to be viewed by browser
+	RewriteCond %{REQUEST_FILENAME} -f
+	RewriteRule /\.|^\.(?!well-known/) - [F]
 
-# Enable gzip compression
+	# Remove /index.html from URLs
+	RewriteCond %{THE_REQUEST} /index\.html[\s?] [NC]
+	RewriteRule ^(.*?)/?index\.html$ /$1 [L,R=301]
+
+	# Serve indexes without trailing slash
+	RewriteCond %{REQUEST_FILENAME} -d
+	RewriteCond %{REQUEST_FILENAME}/index.html -f
+	RewriteRule ^(.*)$ $1/index.html [L]
+
+	# front controller
+	RewriteCond %{REQUEST_URI} ^/app/sk/map/
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule !\.(pdf|js|mjs|ico|gif|jpg|jpeg|png|webp|svg|css|rar|zip|7z|tar\.gz|map|eot|ttf|otf|woff|woff2)$ index.php [L]
+</IfModule>
+
+# enable gzip compression
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml application/rss+xml image/svg+xml
+	<IfModule mod_filter.c>
+		AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml image/svg+xml
+	</IfModule>
 </IfModule>
