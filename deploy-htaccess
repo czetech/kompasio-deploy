@@ -11,7 +11,7 @@ ErrorDocument 404 /404.html
 # enable cool URL
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteBase /
+	# RewriteBase /
 
 	RedirectMatch 301 ^/app/sk/map/?$ /app/sk/map/zoznam/
 
