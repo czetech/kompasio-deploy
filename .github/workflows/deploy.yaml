@@ -1,11 +1,21 @@
 name: Deploy
+run-name: >-
+  ${{ github.event_name == 'push'
+    && format('[push] {0}', github.event.head_commit.message)
+    || format('[{0}] Deploy to [{4}@{2}:{3}]:{1}',
+      github.event_name == 'workflow_dispatch' && 'manual'
+        || github.event.action,
+      inputs.deploy_path || vars.DEPLOY_PATH,
+      inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk',
+      inputs.deploy_port || vars.DEPLOY_PORT || '22',
+      inputs.deploy_user || vars.DEPLOY_USER || 'root') }}
 on:
   push:
     branches:
     - main
   repository_dispatch:
     types:
-    - deploy
+    - site
   workflow_dispatch:
     inputs:
       deploy_path:
@@ -22,14 +32,13 @@ permissions:
   contents: read
 concurrency: >-
   ${{ inputs.deploy_path || vars.DEPLOY_PATH }}::${{
-  inputs.deploy_host || vars.DEPLOY_HOST }}::${{
-  inputs.deploy_port || vars.DEPLOY_PORT }}::${{
-  inputs.deploy_user || vars.DEPLOY_USER }}
+  inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk' }}::${{
+  inputs.deploy_port || vars.DEPLOY_PORT || '22' }}::${{
+  inputs.deploy_user || vars.DEPLOY_USER || 'root' }}
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -42,8 +51,8 @@ jobs:
           dep: >-
             deploy
             -o deploy_path=${{ inputs.deploy_path || vars.DEPLOY_PATH }}
-            -o hostname=${{ inputs.deploy_host || vars.DEPLOY_HOST }}
-            -o port=${{ inputs.deploy_port || vars.DEPLOY_PORT }}
-            -o remote_user=${{ inputs.deploy_user || vars.DEPLOY_USER }}
+            -o hostname=${{ inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk' }}
+            -o port=${{ inputs.deploy_port || vars.DEPLOY_PORT || '22' }}
+            -o remote_user=${{ inputs.deploy_user || vars.DEPLOY_USER || 'root' }}
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           known-hosts: ${{ inputs.known_hosts || vars.KNOWN_HOSTS }}
