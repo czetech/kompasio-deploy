@@ -9,10 +9,12 @@ set('ssh_multiplexing', false);
 set('username', 'jchorvat@cassiopea.sk');
 
 // Config
-
+set('bin/php', '/usr/bin/php8.1');
 set('repository', 'git@gitlab.com:kompasio-group/kompasio.git');
 
 set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
+
+host('kompasio.sk');
 
 add('shared_files', [
 	'config/local.neon'
