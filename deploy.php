@@ -11,7 +11,7 @@ set('username', 'jchorvat@cassiopea.sk');
 // Config
 set('bin/php', '/usr/bin/php8.1');
 set('repository', 'git@gitlab.com:kompasio-group/kompasio.git');
-
+set('branch', 'production');
 set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
 
 host('kompasio.sk');
