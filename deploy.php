@@ -9,6 +9,7 @@ host('kompasio.sk');
 set('repository', 'git@gitlab.com:kompasio-group/kompasio.git');
 set('branch', 'production');
 set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
+set('keep_releases', 3);
 set('bin/php', '/usr/bin/php8.1');
 set('writable_mode', 'chmod');
 
