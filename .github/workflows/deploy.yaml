@@ -1,18 +1,13 @@
 name: Deploy
 run-name: >-
-  ${{ github.event_name == 'push'
-    && format('[push] {0}', github.event.head_commit.message)
-    || format('[{0}] Deploy to [{4}@{2}:{3}]:{1}',
-      github.event_name == 'workflow_dispatch' && 'manual'
-        || github.event.action,
-      inputs.deploy_path || vars.DEPLOY_PATH,
-      inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk',
-      inputs.deploy_port || vars.DEPLOY_PORT || '22',
-      inputs.deploy_user || vars.DEPLOY_USER || 'root') }}
+  ${{ format('[{0}] Deploy to [{4}@{2}:{3}]:{1}',
+    github.event_name == 'workflow_dispatch' && 'manual'
+      || github.event.action,
+    inputs.deploy_path || vars.DEPLOY_PATH,
+    inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk',
+    inputs.deploy_port || vars.DEPLOY_PORT || '22',
+    inputs.deploy_user || vars.DEPLOY_USER || 'root') }}
 on:
-  push:
-    branches:
-    - main
   repository_dispatch:
     types:
     - site
