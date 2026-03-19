@@ -24,7 +24,7 @@ combined into a single release on the server:
 
 1. `deploy:prepare` — set up release directory structure
 2. `deploy:vendors` — install PHP dependencies via Composer
-3. `deploy:astro` — clone, build, and copy Astro output into `www/`
+3. `deploy:astro` — clone, build, and copy Astro output into document root
 4. `deploy:htaccess` — upload `.htaccess` from this repo
 5. `deploy:publish` — symlink the new release as `current`
 
