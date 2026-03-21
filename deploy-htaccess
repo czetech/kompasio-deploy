@@ -14,7 +14,7 @@ Require all granted
 	</If>
 
 	# Cookie consent library — revalidate every request
-	<If "%{REQUEST_URI} =~ m#^/frontend/assets/js/cookieconsent\.js#">
+	<If "%{REQUEST_URI} =~ m#^/app/sk/map/frontend/assets/js/cookieconsent\.js#">
 		Header set Cache-Control "no-cache"
 	</If>
 </IfModule>
