@@ -21,6 +21,10 @@ on:
         description: Deploy port
       deploy_user:
         description: Deploy user
+      astro_repository:
+        description: Astro repository
+      astro_branch:
+        description: Astro branch
       auth:
         description: Basic auth (user:password)
       known_hosts:
@@ -51,6 +55,8 @@ jobs:
             -o hostname=${{ inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk' }}
             -o port=${{ inputs.deploy_port || vars.DEPLOY_PORT || '22' }}
             -o remote_user=${{ inputs.deploy_user || vars.DEPLOY_USER || 'root' }}
+            ${{ (inputs.astro_repository || vars.ASTRO_REPOSITORY) && format('-o astro_repository={0}', inputs.astro_repository || vars.ASTRO_REPOSITORY) }}
+            ${{ (inputs.astro_branch || vars.ASTRO_BRANCH) && format('-o astro_branch={0}', inputs.astro_branch || vars.ASTRO_BRANCH) }}
             ${{ (inputs.auth || vars.AUTH) && format('-o auth={0}', inputs.auth || vars.AUTH) }}
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           known-hosts: ${{ inputs.known_hosts || vars.KNOWN_HOSTS }}
