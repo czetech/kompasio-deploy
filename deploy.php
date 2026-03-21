@@ -23,6 +23,7 @@ task('deploy:astro', function () {
 	run('git clone --depth 1 {{astro_repository}} ' . $astroDir);
 	run('cd ' . $astroDir . ' && npm ci');
 	run('cd ' . $astroDir . ' && npm run build');
+	run('rm -r ' . $astroDir . '/dist-astro/app');
 	run('cp -r ' . $astroDir . '/dist-astro/* {{release_path}}/public_html/');
 	run('cp ' . $astroDir . '/dist-cookieconsent/cookieconsent.js {{release_path}}/public_html/frontend/assets/js/cookieconsent.js');
 	run('rm -rf ' . $astroDir);
@@ -35,8 +36,7 @@ task('deploy:htaccess', function () {
 
 desc('Create /app/sk/map symlink for Nette');
 task('create-map-link', function () {
-	run('mkdir {{deploy_path}}/current/public_html/app');
-	run('mkdir {{deploy_path}}/current/public_html/app/sk');
+	run('mkdir -p {{deploy_path}}/current/public_html/app/sk');
 	run('ln -s {{deploy_path}}/current/public_html {{deploy_path}}/current/public_html/app/sk/map');
 });
 
