@@ -24,6 +24,7 @@ task('deploy:astro', function () {
 	run('cd ' . $astroDir . ' && npm ci');
 	run('cd ' . $astroDir . ' && npm run build');
 	run('cp -r ' . $astroDir . '/dist-astro/* {{release_path}}/public_html/');
+	run('cp ' . $astroDir . '/dist-cookieconsent/cookieconsent.js {{release_path}}/public_html/frontend/assets/js/cookieconsent.js');
 	run('rm -rf ' . $astroDir);
 });
 

@@ -12,6 +12,11 @@ Require all granted
 	<If "%{REQUEST_URI} !~ m#^/app/sk/map/# && (%{REQUEST_URI} =~ m#^/[^.]*$# || %{REQUEST_URI} =~ m#^/404\.html$#)">
 		Header set Cache-Control "max-age=60, public"
 	</If>
+
+	# Cookie consent library — revalidate every request
+	<If "%{REQUEST_URI} =~ m#^/frontend/assets/js/cookieconsent\.js#">
+		Header set Cache-Control "no-cache"
+	</If>
 </IfModule>
 
 <IfModule mod_rewrite.c>
