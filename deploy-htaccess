@@ -5,12 +5,12 @@ Require all granted
 <IfModule mod_headers.c>
 	# Astro hashed assets — immutable, 1 year
 	<If "%{REQUEST_URI} =~ m#^/_astro/#">
-		Header set Cache-Control "immutable, max-age=31536000, public"
+		Header set Cache-Control "immutable, max-age=31536000"
 	</If>
 
 	# Astro HTML pages — 1 minute
 	<If "%{REQUEST_URI} !~ m#^/app/sk/map/# && (%{REQUEST_URI} =~ m#^/[^.]*$# || %{REQUEST_URI} =~ m#^/404\.html$#)">
-		Header set Cache-Control "max-age=60, public"
+		Header set Cache-Control "max-age=60"
 	</If>
 
 	# Cookie consent library — revalidate every request
