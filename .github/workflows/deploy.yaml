@@ -21,6 +21,8 @@ on:
         description: Deploy port
       deploy_user:
         description: Deploy user
+      auth:
+        description: Basic auth (user:password)
       known_hosts:
         description: Known hosts
 permissions:
@@ -49,5 +51,6 @@ jobs:
             -o hostname=${{ inputs.deploy_host || vars.DEPLOY_HOST || 'kompasio.sk' }}
             -o port=${{ inputs.deploy_port || vars.DEPLOY_PORT || '22' }}
             -o remote_user=${{ inputs.deploy_user || vars.DEPLOY_USER || 'root' }}
+            ${{ (inputs.auth || vars.AUTH) && format('-o auth={0}', inputs.auth || vars.AUTH) }}
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           known-hosts: ${{ inputs.known_hosts || vars.KNOWN_HOSTS }}

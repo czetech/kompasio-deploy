@@ -12,6 +12,7 @@ set('keep_releases', 3);
 set('bin/php', '/usr/bin/php8.1');
 set('writable_mode', 'chmod');
 set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
+set('astro_branch', 'main');
 
 add('shared_files', ['config/local.neon']);
 add('shared_dirs', ['public_html/source', 'public_html/thumbs']);
@@ -20,7 +21,7 @@ add('writable_dirs', ['log', 'temp']);
 desc('Build and copy Astro static site');
 task('deploy:astro', function () {
 	$astroDir = '{{release_path}}/.astro-build';
-	run('git clone --depth 1 {{astro_repository}} ' . $astroDir);
+	run('git clone --branch {{astro_branch}} --depth 1 {{astro_repository}} ' . $astroDir);
 	run('cd ' . $astroDir . ' && npm ci');
 	run('cd ' . $astroDir . ' && npm run build');
 	run('rm -r ' . $astroDir . '/dist-astro/app');
@@ -32,6 +33,23 @@ task('deploy:astro', function () {
 desc('Upload .htaccess');
 task('deploy:htaccess', function () {
 	upload(__DIR__ . '/deploy-htaccess', '{{release_path}}/public_html/.htaccess');
+
+	$auth = get('auth');
+	if ($auth) {
+		[$user, $password] = explode(':', $auth, 2);
+		$hash = password_hash($password, PASSWORD_BCRYPT);
+		$htpasswd = $user . ':' . $hash;
+		run('echo ' . escapeshellarg($htpasswd) . ' > {{release_path}}/public_html/.htpasswd');
+
+		$htpasswdPath = run('readlink -f {{deploy_path}}') . '/current/public_html/.htpasswd';
+		$authLines = implode('\n', [
+			'AuthName \"Restricted Access\"',
+			'AuthType Basic',
+			'AuthUserFile ' . $htpasswdPath,
+			'Require valid-user',
+		]);
+		run('sed -i "s|Require all granted|' . $authLines . '|" {{release_path}}/public_html/.htaccess');
+	}
 });
 
 desc('Create /app/sk/map symlink for Nette');
