@@ -22,6 +22,10 @@ Require all granted
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
+	# Redirect www.<host> to <host>
+	RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+	RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
 	# Redirect HTTP to HTTPS
 	RewriteCond %{HTTPS} !on
 	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
