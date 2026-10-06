@@ -15,7 +15,7 @@ set('astro_repository', 'https://github.com/czetech/kompasio-site.git');
 set('astro_branch', 'main');
 
 add('shared_files', ['config/local.neon']);
-add('shared_dirs', ['public_html/source', 'public_html/thumbs']);
+add('shared_dirs', ['public_html/source', 'public_html/thumbs', 'public_html/imgs']);
 add('writable_dirs', ['log', 'temp']);
 
 desc('Build and copy Astro static site');
